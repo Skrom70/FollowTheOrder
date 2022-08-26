@@ -14,8 +14,7 @@ protocol Router: AnyObject {
 }
 
 class GameScene: SKScene {
-	
-	// Insets
+
 	private let levelLabelInsets = UIEdgeInsets(top: 48, left: 10, bottom: 10, right: 10)
 	private var circleSize: CGFloat!
 	private var circleScale: CGFloat!
@@ -34,6 +33,7 @@ class GameScene: SKScene {
 	var pointGenerator: ShapePointGenerator!
 	
 	override func didMove(to view: SKView) {
+		
 		circleSize = frame.width / 6
 		
 		let circleAssetImageSize: CGFloat = 96.0 // -_-
@@ -154,7 +154,6 @@ class GameScene: SKScene {
 		currentLevel = 1
 		buildCircles()
 		levelDidChanged()
-		
 	}
 
 	func levelDidChanged() {
@@ -174,17 +173,13 @@ class GameScene: SKScene {
 extension GameScene {
 	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 		let point = touches.first!.location(in: self)
-		let size = CGSize(width: circleSize, height: circleSize)
+		let size = CGSize(width: 1, height: 1)
 		let touchFrame = CGRect(origin: point, size: size)
 		
 		for i in 0..<circles.count {
 			if circles[i].frame.intersects(touchFrame) {
 				if i == self.currentSequenceIndex {
-					let selectedCircle = createCircle(with: CGPoint(x: circles[i].frame.origin.x + circles[i].frame.width / 2,
-																	y: circles[i].frame.origin.y + circles[i].frame.height / 2), color: .green)
-					circles[i].removeFromParent()
-					circles[i] = selectedCircle
-					addChild(circles[i])
+					circles[i].texture = SKTexture(imageNamed: "green-circle")
 					currentSequenceIndex += 1
 					if currentSequenceIndex >= circles.count {
 						self.view?.isUserInteractionEnabled = false

@@ -77,7 +77,7 @@ class GameViewController: UIViewController, Router, FinishViewControllerDelegate
 		vc.removeFromParent()
 		vc.view.alpha =  1
 		
-		UIView.animate(withDuration: 1.5,  animations: {
+		UIView.animate(withDuration: 0.5,  animations: {
 			vc.view.alpha = 0
 		}) { [weak self] (completed)  in
 			guard let `self` = self else {return}

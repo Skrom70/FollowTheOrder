@@ -13,7 +13,7 @@ protocol FinishViewControllerDelegate: AnyObject {
 
 class FinishViewController: UIViewController {
 
-	@IBOutlet weak var messageLabel: UILabel!
+	@IBOutlet weak var messageTextView: UITextView!
 	@IBOutlet weak var playButton: UIButton!
 	
 	var mode: FinishMode!
@@ -32,10 +32,22 @@ class FinishViewController: UIViewController {
 		
 		self.view.isUserInteractionEnabled = true
 		
-		messageLabel.text = mode == .gameover ? "Oooooops!" : "Nice!"
+		messageTextView.text = mode == .gameover ? "Oooooops!" : "Nice!"
+		
+//		messageTextView.font = UIFont(name: "AvenirNext-Regulr", size: 28)
+		
+		if mode == .success {
+			FortunaService().getData { [weak self] speach in
+				guard let `self` = self, let speach = speach else {
+					return
+				}
+				DispatchQueue.main.async {
+					self.messageTextView.text = speach
+				}
+			}
+		}
 		
 		playButton.setImage(UIImage(named: mode == .gameover ? "try-again" : "next-level"), for: .normal)
-		messageLabel.numberOfLines = 0
 	}
 
 

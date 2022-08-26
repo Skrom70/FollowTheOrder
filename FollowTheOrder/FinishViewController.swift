@@ -28,13 +28,9 @@ class FinishViewController: UIViewController {
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-//		playButton.imageView?.image = UIImage(named: mode == .gameover ? "try-again" : "next-level")
-		
 		self.view.isUserInteractionEnabled = true
 		
 		messageTextView.text = mode == .gameover ? "Oooooops!" : "Nice!"
-		
-//		messageTextView.font = UIFont(name: "AvenirNext-Regulr", size: 28)
 		
 		if mode == .success {
 			FortunaService().getData { [weak self] speach in
@@ -43,6 +39,11 @@ class FinishViewController: UIViewController {
 				}
 				DispatchQueue.main.async {
 					self.messageTextView.text = speach
+					self.messageTextView.alpha = 0.0
+					UIView.animate(withDuration: 1, delay: 0.0, options: .curveEaseInOut) {
+						self.messageTextView.alpha = 1.0
+					}
+
 				}
 			}
 		}

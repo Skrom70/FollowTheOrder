@@ -28,17 +28,12 @@ class GameViewController: UIViewController, Router, FinishViewControllerDelegate
 				
 				gamescene = scene as! GameScene
 				gamescene.routeDelegate = self
-                
+       
                 // Present the scene
                 view.presentScene(scene)
-				
-				self.view.backgroundColor = scene.view?.backgroundColor
             }
 		
             view.ignoresSiblingOrder = true
-            
-            view.showsFPS = true
-            view.showsNodeCount = true
         }
 		
 		
@@ -50,7 +45,7 @@ class GameViewController: UIViewController, Router, FinishViewControllerDelegate
 		finishViewController.mode = .gameover
 		finishViewController.view.frame =  view.bounds
 		finishViewController.view.alpha = 0
-		UIView.animate(withDuration: 0.6, animations: { [weak self] in
+		UIView.animate(withDuration: 0.4, animations: { [weak self] in
 			guard let `self` = self else {return}
 			self.finishViewController.view.alpha = 1
 		}, completion: { _ in
@@ -86,17 +81,6 @@ class GameViewController: UIViewController, Router, FinishViewControllerDelegate
 		}
 	}
 
-    override var shouldAutorotate: Bool {
-        return true
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
-    }
 
     override var prefersStatusBarHidden: Bool {
         return true
